@@ -1,0 +1,135 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "shift shift": "file_finder::Toggle",
+      "alt-h": "editor::MoveLeft",
+      "alt-j": "editor::MoveDown",
+      "alt-k": "editor::MoveUp",
+      "alt-l": "editor::MoveRight",
+      "alt-m": "editor::MovePageDown",
+      "alt-,": "editor::MovePageUp",
+      "alt-s": "zed::OpenSettingsFile",
+      "cmd-\\": "workspace::ActivatePreviousPane",
+      "shift f": [
+        "task::Spawn",
+        { "task_name": "File Navigation", "reveal_target": "center" },
+      ],
+    },
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "j j": "vim::NormalBefore",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "'": "vim::RepeatFind",
+      "U": "editor::Redo",
+      "g n": "editor::SelectAllMatches",
+      "space f f": [
+        "task::Spawn",
+        { "task_name": "Find File (in workspace)", "reveal_target": "center" },
+      ],
+      "space f m": [
+        "task::Spawn",
+        { "task_name": "File Navigation", "reveal_target": "center" },
+      ],
+      "space i": "editor::OrganizeImports",
+      "space j": "editor::GoToDiagnostic",
+      "space '": "editor::GoToPreviousDiagnostic",
+      "space p": "command_palette::Toggle",
+      "space ;": "workspace::ToggleRightDock",
+      "space c l": "workspace::ToggleCenteredLayout",
+      "space e": "project_panel::ToggleFocus",
+      "space \\": "project_panel::CollapseAllEntries",
+      "space o": "outline::Toggle",
+      "space w": "pane::CloseActiveItem",
+      "space q a": "pane::CloseAllItems",
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "cmd-j": "editor::DuplicateLineDown",
+      "cmd-[": "editor::Fold",
+      "cmd-]": "editor::UnfoldLines",
+      "cmd-alt-[": "editor::FoldAll",
+      "cmd-alt-]": "editor::UnfoldAll",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-shift-d": "debug_panel::ToggleFocus",
+    },
+  },
+  {
+    "context": "Editor && edit_prediction",
+    "unbind": {
+      "alt-k": "editor::AcceptNextWordEditPrediction",
+    },
+  },
+  {
+    "context": "VimControl && !menu",
+    "unbind": {
+      "ctrl-d": "vim::ScrollDown",
+    },
+  },
+  {
+    "context": "showing_completions",
+    "unbind": {
+      "ctrl-d": "vim::ScrollDown",
+    },
+  },
+  {
+    "context": "vim_mode == insert",
+    "unbind": {
+      "ctrl-d": "vim::Outdent",
+    },
+  },
+  {
+    "context": "vim_mode == literal",
+    "unbind": {
+      "ctrl-d": ["vim::Literal", ["ctrl-d", "\u0004"]],
+    },
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "alt-,": "editor::GoToPreviousHunk",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-t": "project_symbols::Toggle",
+    },
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "alt-n": "search::SelectNextMatch"
+    }
+  },
+  {
+    "context": "Pane",
+    "unbind": {
+      "f3": "search::SelectNextMatch"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "alt-p": "search::SelectPreviousMatch"
+    }
+  },
+  {
+    "context": "Pane",
+    "unbind": {
+      "shift-f3": "search::SelectPreviousMatch"
+    }
+  }
+]

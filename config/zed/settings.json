@@ -1,0 +1,80 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "terminal": {
+    "font_family": "Hack Nerd Font",
+    "dock": "bottom",
+  },
+  "git_panel": {
+    "tree_view": false,
+    "dock": "left",
+  },
+  "cursor_blink": true,
+  "vim_mode": true,
+  "cli_default_open_behavior": "new_window",
+  "project_panel": {
+    "dock": "left",
+    "hide_hidden": true,
+    "button": true,
+  },
+  "cursor_shape": "bar",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+  "session": {
+    "trust_all_worktrees": true,
+  },
+  "icon_theme": "Zed (Default)",
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "theme": "JetBrains Dark",
+  // "buffer_font_family": "Iosevka Nerd Font",
+  "title_bar": {
+    "show_onboarding_banner": false,
+    "show_branch_name": false,
+    "show_sign_in": false,
+    "show_user_menu": false,
+  },
+  "tab_bar": {
+    // "show": false,
+  },
+  "toolbar": {
+    "quick_actions": false,
+    // "breadcrumbs": false,
+  },
+  "status_bar": {
+    // "experimental.show": false,
+  },
+  "scrollbar": {
+    "show": "never",
+  },
+  "gutter": {
+    "min_line_number_digits": 0,
+    "folds": false,
+  },
+  "inline_code_actions": false,
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000,
+    },
+  },
+  "when_closing_with_no_tabs": "keep_window_open",
+  "close_on_file_delete": true,
+  "restore_on_file_reopen": false,
+  "restore_on_startup": "empty_tab",
+  // "vim_mode": true,
+  "lsp": {
+    "gopls": {
+      "initialization_options": {
+        "directoryFilters": ["-", "+./back"],
+      },
+    },
+  },
+}

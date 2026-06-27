@@ -1,0 +1,23 @@
+# Ceci est le fichier de configuration personnel de Git.
+[user]
+# Veuillez adapter et décommenter les lignes suivantes :
+	name = Ludovic ZWINGELSTEIN
+	email = ludovic.zwingelstein@exaion.com
+
+[alias]
+ logg = log --oneline --graph --decorate \
+  --format='%C(red)%h%C(reset) %C(bold yellow)%d%C(reset) %s %C(dim white)— %C(green)%an%C(reset) %C(blue)(%ar)%C(reset)'
+ co = checkout
+ st = status
+ feat   = "!git checkout -b feat/$1 #"
+ fix    = "!git checkout -b fix/$1 #"
+ chore  = "!git checkout -b chore/$1 #"
+ docs   = "!git checkout -b docs/$1 #"
+ refact = "!git checkout -b refactor/$1 #"
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+

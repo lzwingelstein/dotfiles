@@ -1,0 +1,38 @@
+[window]
+decorations = "Full"
+decorations_theme_variant = "Dark"
+blur=true
+
+
+[font]
+size = 12.0
+
+[font.normal]
+family = "JetBrainsMonoNerdFont"
+
+[font.bold]
+family = "JetBrainsMonoNerdFont"
+
+[font.italic]
+family = "JetBrainsMonoNerdFont"
+
+[font.bold_italic]
+family = "JetBrainsMonoNerdFont"
+
+[colors.primary]
+background = "#26282B"
+foreground = "#cdd6f4"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[keyboard]
+bindings = [
+  { key = "V", mods = "Control|Shift", action = "Paste" },
+  { key = "C", mods = "Control|Shift", action = "Copy" },
+  { key = "N", mods = "Control|Shift", action = "SpawnNewInstance" }
+]
+
+[env]
+TERM = "xterm-256color"
