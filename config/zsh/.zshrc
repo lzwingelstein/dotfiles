@@ -115,7 +115,7 @@ export EDITOR="zed"
 
 # Opening in editor
 alias e="${EDITOR}"
-alias zc="e ~/.zshrc"
+alias zc="e ${ZDOTDIR}/.zshrc"
 alias gc="git config --global --edit"
 alias notes="codium ~/work/notes"
 alias console="e ~/work/console"
@@ -127,7 +127,7 @@ alias kube="kubectl"
 alias kb=kube
 alias cc="clear"
 alias q="exit"
-alias r="source ~/.zshrc"
+alias r="source ${ZDOTDIR}/.zshrc"
 alias z="zed"
 alias ya="yazi"
 alias t="tmux"
@@ -170,7 +170,7 @@ alias cdg=cd_fzf_git_global
 
 cd_config() {
   local config_dir
-  config_dir=$( (ls -d ~/.tmux.conf ~/.zshrc ~/.zsh/ ~/.gitconfig ~/.bashrc ~/.oh-my-zsh/ ~/.config/nvim/ ~/.config/zed/ ~/.config/opencode/ ~/.config/lazygit/ ~/.config/htop/ ~/.config/gtk-3.0/ ~/.config/fish/ 2>/dev/null) | fzf ) && e "$config_dir"
+  config_dir=$( (ls -d ~/.tmux.conf ${ZDOTDIR}/.zshrc ${ZDOTDIR}/.zsh/ ~/.config/git/config ~/.bashrc ~/.oh-my-zsh/ ~/.config/nvim/ ~/.config/zed/ ~/.config/opencode/ ~/.config/lazygit/ ~/.config/htop/ ~/.config/gtk-3.0/ ~/.config/fish/ 2>/dev/null) | fzf ) && e "$config_dir"
 }
 alias ec=cd_config
 
@@ -179,8 +179,8 @@ alias ec=cd_config
 
 
 # Charger les configs
-for config in ~/.zsh/*.zsh; do
-  source "$config"
+for config in ${ZDOTDIR}/.zsh/*.zsh; do
+  [[ -f "$config" ]] && source "$config"
 done
 
 
@@ -196,7 +196,7 @@ elif [ -s "$NVM_DIR/nvm.sh" ]; then
   [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f "${ZDOTDIR}/.fzf.zsh" ] && source "${ZDOTDIR}/.fzf.zsh"
 
 # kubectl-krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
@@ -207,5 +207,5 @@ export GITEA_SERVER_URL="git.exaion.in"
 eval "$(starship init zsh)"
 
 # Config spécifique à la machine
-[[ "$(uname -s)" == "Darwin" ]] && [[ -f ~/.zshrc.private ]] && source ~/.zshrc.private
-[[ "$(uname -s)" == "Linux"  ]] && [[ -f ~/.zshrc.work    ]] && source ~/.zshrc.work
+[[ "$(uname -s)" == "Darwin" ]] && [[ -f ${ZDOTDIR}/.zshrc.private ]] && source ${ZDOTDIR}/.zshrc.private
+[[ "$(uname -s)" == "Linux"  ]] && [[ -f ${ZDOTDIR}/.zshrc.work    ]] && source ${ZDOTDIR}/.zshrc.work
