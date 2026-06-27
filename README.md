@@ -9,23 +9,21 @@ Configs partagées entre deux machines via GNU Stow.
 
 ## Structure
 
+Tout vit dans `~/.config/`. Le seul fichier hors `~/.config/` est `~/.zshenv`,
+généré par `install.sh` (il sert juste à pointer `ZDOTDIR` vers `~/.config/zsh`).
+
 ```
 ~/.dotfiles/
-├── home/        # fichiers à la racine ~ (stow -t ~ home)
-│   ├── .zshenv                      # ZDOTDIR=~/.config/zsh
-│   ├── .tmux.conf
-│   ├── .tmux-cheatsheet.sh
-│   └── .config/
-│       ├── starship.toml
-│       └── opencode/opencode.jsonc
-└── config/      # tout ~/.config/ (stow -t ~/.config config)
+├── install.sh   # génère ~/.zshenv + stow config/ vers ~/.config
+└── config/      # tout ~/.config/ (un sous-dossier = un outil)
     ├── zsh/     # .zshrc, .zshrc.{private,work}, .fzf.zsh, .zsh/
     ├── git/     # config (gitconfig XDG), ignore
-    ├── nvim/
-    ├── zed/
-    ├── lazygit/ lazydocker/
-    ├── alacritty/ helix/ yazi/
-    ├── k9s/ fish/ htop/
+    ├── tmux/    # tmux.conf, tmux-cheatsheet.sh
+    ├── nvim/  zed/
+    ├── lazygit/  lazydocker/
+    ├── alacritty/  helix/  yazi/
+    ├── k9s/  fish/  htop/
+    ├── starship.toml  opencode/
     └── ...      # dotadd <tool> pour ajouter un outil
 ```
 
@@ -33,14 +31,12 @@ Configs partagées entre deux machines via GNU Stow.
 
 ```bash
 git clone <repo> ~/.dotfiles
-cd ~/.dotfiles
-
-stow -t ~ home
-stow -t ~/.config config
-
-# Sur le boulot uniquement : rien de plus, les scripts boulot
-# sont dans config/zsh/.zsh/ et chargés automatiquement
+~/.dotfiles/install.sh
 ```
+
+Le script est idempotent : relançable à tout moment pour re-stow.
+Les scripts spécifiques au boulot sont dans `config/zsh/.zsh/` et chargés
+automatiquement (les fonctions définies sont inoffensives sur le mac).
 
 ## Ajouter / supprimer un outil
 
