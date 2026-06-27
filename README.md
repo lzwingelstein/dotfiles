@@ -38,6 +38,37 @@ Le script est idempotent : relançable à tout moment pour re-stow.
 Les scripts spécifiques au boulot sont dans `config/zsh/.zsh/` et chargés
 automatiquement (les fonctions définies sont inoffensives sur le mac).
 
+## Stow : charger les configs
+
+**Tout est chargé en une seule commande, pas outil par outil.** `config/` est
+un unique package stow : on le traite d'un bloc, et stow crée tous les symlinks
+`~/.config/<outil> -> ~/.dotfiles/config/<outil>` d'un coup.
+
+```bash
+# Charger TOUTES les configs (c'est ce que fait install.sh)
+stow --dir=~/.dotfiles --target=~/.config config
+```
+
+> Il n'y a pas de `stow nvim` puis `stow zed` séparés : la commande ci-dessus
+> les installe tous ensemble. Pour ajouter un nouvel outil au repo, voir
+> [Ajouter / supprimer un outil](#ajouter--supprimer-un-outil) ci-dessus.
+
+Autres opérations sur le même package :
+
+```bash
+# Re-charger après avoir ajouté/déplacé un fichier (idempotent)
+stow --dir=~/.dotfiles --target=~/.config --restow config
+
+# Tout délier (supprime les symlinks, garde le repo)
+stow --dir=~/.dotfiles --target=~/.config --delete config
+
+# Simuler sans rien modifier, pour vérifier avant
+stow --dir=~/.dotfiles --target=~/.config --simulate --verbose config
+```
+
+`--dir` = où sont les packages, `--target` = où créer les symlinks, `config`
+= le package traité.
+
 ## Ajouter / supprimer un outil
 
 ```bash
@@ -54,9 +85,9 @@ Ces fonctions sont définies dans `config/zsh/.zsh/dotfiles.zsh`.
 
 | Package | Contenu |
 |---|---|
-| `home/` | `.zshenv`, tmux, starship, opencode |
 | `config/zsh/` | zshrc, fzf, scripts `.zsh/` |
 | `config/git/` | gitconfig (XDG), gitignore global |
+| `config/tmux/` | tmux.conf, cheatsheet |
 | `config/nvim/` | LazyVim |
 | `config/zed/` | settings, keymap, tasks |
 | `config/lazygit/` `config/lazydocker/` | TUI git/docker |
@@ -65,6 +96,7 @@ Ces fonctions sont définies dans `config/zsh/.zsh/dotfiles.zsh`.
 | `config/yazi/` | file manager |
 | `config/k9s/` | kubernetes TUI |
 | `config/fish/` `config/htop/` | shell, monitoring |
+| `config/starship.toml` `config/opencode/` | prompt, agent CLI |
 
 ## Non versionnés
 
