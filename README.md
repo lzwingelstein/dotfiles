@@ -50,11 +50,21 @@ git clone <repo> ~/.dotfiles
 cd ~/.dotfiles
 
 # Sur les deux machines
-stow -t ~        home
-stow -t ~/.config config
+stow -t ~ home
+stow -d ~/.dotfiles/config -t ~/.config nvim zed lazygit lazydocker alacritty helix yazi k9s fish htop git
 
 # Sur le boulot uniquement
 stow -t ~ home-work
+```
+
+Pour stow un seul outil :
+```bash
+stow -d ~/.dotfiles/config -t ~/.config nvim
+```
+
+Pour unstow :
+```bash
+stow -D -d ~/.dotfiles/config -t ~/.config nvim
 ```
 
 ## Outils versionnés
