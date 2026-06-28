@@ -1,0 +1,16 @@
+font-family = JetBrainsMono Nerd Font
+font-size = 12
+
+background = 26282B
+foreground = cdd6f4
+
+scrollback-limit = 10000
+mouse-scroll-multiplier = 3
+
+macos-titlebar-style = hidden
+background-blur-radius = 20
+window-theme = dark
+
+keybind = ctrl+shift+v=paste
+keybind = ctrl+shift+c=copy
+keybind = ctrl+shift+n=new_window

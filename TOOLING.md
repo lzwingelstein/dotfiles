@@ -30,6 +30,7 @@ script officiel (noté dans la colonne).
 | Outil | macOS (brew) | Debian | Notes |
 |---|---|---|---|
 | alacritty | `--cask alacritty` | `apt alacritty` | |
+| ghostty | `--cask ghostty` | binaire GitHub | config = `~/.config/ghostty/config` |
 | tmux | `tmux` | `apt tmux` | plugins via tpm (git clone `~/.tmux/plugins/tpm`) |
 | zellij | `zellij` | binaire GitHub / cargo | |
 
@@ -42,6 +43,12 @@ script officiel (noté dans la colonne).
 | lazygit | `lazygit` | binaire GitHub | |
 | lazydocker | `lazydocker` | script | `curl .../lazydocker/install_update_linux.sh \| bash` |
 | diffview | — | — | plugin Neovim, auto-installé par lazy.nvim |
+
+## Polices
+
+| Outil | macOS (brew) | Debian | Notes |
+|---|---|---|---|
+| JetBrainsMono Nerd Font | `--cask font-jetbrains-mono-nerd-font` | zip GitHub | utilisée par alacritty, ghostty, nvim, etc. |
 
 ## Fichiers & système
 
