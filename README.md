@@ -34,6 +34,9 @@ git clone <repo> ~/.dotfiles
 ~/.dotfiles/install.sh
 ```
 
+Pour le tooling de base (zsh, neovim, lazygit, zed…), voir [`TOOLING.md`](TOOLING.md) :
+la liste à installer avec, par outil, le paquet macOS (brew) et Debian.
+
 Le script est idempotent : relançable à tout moment pour re-stow.
 Les scripts spécifiques au boulot sont dans `config/zsh/.zsh/` et chargés
 automatiquement (les fonctions définies sont inoffensives sur le mac).
