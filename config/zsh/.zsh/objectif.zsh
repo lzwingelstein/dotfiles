@@ -1,4 +1,4 @@
-noo() {
+objectif() {
   if [[ $# -eq 0 ]]; then
     _journal_read_section "OBJECTIFS"
   else

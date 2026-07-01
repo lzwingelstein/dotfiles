@@ -54,3 +54,5 @@ proxy_status() {
     echo "🟢 Proxy ON → ${http_proxy}"
   fi
 }
+
+proxy_on

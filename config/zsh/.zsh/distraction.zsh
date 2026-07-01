@@ -1,4 +1,4 @@
-nod() {
+distraction() {
   if [[ $# -eq 0 ]]; then
     _journal_read_section "DISTRACTIONS"
   else

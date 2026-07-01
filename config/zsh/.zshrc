@@ -111,7 +111,7 @@ source $ZSH/oh-my-zsh.sh
 ## Editors
 alias code="codium"
 alias c="code"
-export EDITOR="zed"
+export EDITOR="nvim"
 
 # Opening in editor
 alias e="${EDITOR}"
@@ -129,16 +129,14 @@ alias cc="clear"
 alias q="exit"
 alias r="source ${ZDOTDIR}/.zshrc"
 alias z="zed"
-alias ya="yazi"
 alias t="tmux"
 
-# le probleme avec cette fonction c'est que je peux etre deplacé sans le vouloir
-yd() {
- local tmp
- tmp=$(yazi "$@" --cwd-file /tmp/yazi-cwd)
- if cwd=$(cat /tmp/yazi-cwd 2>/dev/null) && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-   cd -- "$cwd"
- fi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	command rm -f -- "$tmp"
 }
 
 cd_fzf_inside() {
