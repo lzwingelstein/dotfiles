@@ -13,3 +13,13 @@ vim.keymap.set("n", "<leader>yp", function()
   Snacks.notify.info("Copié : " .. path)
 end, { desc = "Copy file path" })
 
+vim.keymap.set("i", "jj", "<Esc>", { desc = "Exit insert mode" })
+
+-- Toggle terminal avec le leader (Warp intercepte <C-/>)
+vim.keymap.set("n", "<leader>tt", function()
+  Snacks.terminal.toggle(nil, { cwd = LazyVim.root() })
+end, { desc = "Toggle Terminal (Root Dir)" })
+
+-- Masquer le terminal depuis l'intérieur (mode terminal)
+vim.keymap.set("t", "<leader>tt", "<cmd>close<cr>", { desc = "Hide Terminal" })
+

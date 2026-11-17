@@ -3,6 +3,7 @@
 # Veuillez adapter et décommenter les lignes suivantes :
 	name = Ludovic ZWINGELSTEIN
 	email = ludovic.zwingelstein@exaion.com
+	signingkey = /home/lz581f9l/.ssh/id_ed25519.pub
 
 [alias]
  logg = log --oneline --graph --decorate \
@@ -14,6 +15,7 @@
  chore  = "!git checkout -b chore/$1 #"
  docs   = "!git checkout -b docs/$1 #"
  refact = "!git checkout -b refactor/$1 #"
+	split = "!f() { local cur new stashed; cur=$(git branch --show-current); new=\"$1\"; if [ -z \"$new\" ]; then echo \"usage: git split <new-branch>\" >&2; return 1; fi; if [ -z \"$cur\" ]; then echo \"erreur: pas sur une branche (HEAD detache)\" >&2; return 1; fi; stashed=0; if [ -n \"$(git status --porcelain --untracked-files=all)\" ]; then git stash push -u -m \"split:$new\" || return 1; stashed=1; fi; git checkout -b \"$new\" || return 1; if [ \"$stashed\" = \"1\" ]; then git stash pop || return 1; fi; git fetch origin \"$cur\" || return 1; git branch -f \"$cur\" \"origin/$cur\" || return 1; echo \"OK: branche '$cur' remise a origin/$cur (HEAD reste sur '$new' avec tes changements)\"; }; f"
 [core]
 	pager = delta
 [interactive]
@@ -21,3 +23,7 @@
 [delta]
 	navigate = true
 
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true

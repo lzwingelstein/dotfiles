@@ -6,3 +6,59 @@
 
 export PATH="$HOME/.opencode/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+
+# lsql        : toutes les connexions de config.toml, mots de passe lus dans KeePassXC.
+# lsql <nom>  : uniquement la connexion <nom>.
+# Mot de passe maître demandé une seule fois ; chaque connexion dont l'URL contient
+# ${env:LAZYSQL_BACK_PWD} reçoit le mot de passe de l'entrée KeePass « vault/<nom> ».
+# Les secrets passent par l'environnement, jamais par la ligne de commande (visible dans `ps`).
+lsql() {
+  local only=$1 kdbx="$HOME/Documents/Mots de passe.kdbx" config="$HOME/.config/lazysql/config.toml"
+  local tmp master name var secret
+  local -a envs
+  tmp=$(mktemp "${XDG_RUNTIME_DIR:-/tmp}/lazysql.XXXXXX") || return 1
+  {
+    # copie de la config (filtrée sur <nom> si fourni) où ${env:LAZYSQL_BACK_PWD} devient
+    # ${env:LAZYSQL_PWD_<nom>} ; ConfigFile pointe vers la copie pour qu'une édition depuis
+    # l'interface n'écrive jamais un mot de passe en clair dans le vrai fichier
+    awk -v only="$only" -v tmp="$tmp" -v q="'" '
+      function flush(  v) {
+        if (keep) { v = "LAZYSQL_PWD_" cur; gsub(/[^A-Za-z0-9]/, "_", v)
+                    gsub(/\$\{env:LAZYSQL_BACK_PWD\}/, "${env:" v "}", buf); printf "%s", buf }
+        buf = ""; keep = 0; inblock = 0
+      }
+      /^\[/ { flush() }
+      /^\[\[database\]\]/ { inblock = 1 }
+      inblock { buf = buf $0 "\n"
+                if ($0 ~ /^Name = /) { cur = substr($0, 9, length($0) - 9); keep = (only == "" || cur == only) }
+                next }
+      /^ConfigFile *=/ { print "ConfigFile = " q tmp q; next }
+      { print }
+      END { flush() }
+    ' "$config" > "$tmp"
+    [[ -n "$only" ]] && ! grep -qxF "Name = '$only'" "$tmp" && { print -u2 "lsql: connexion inconnue : $only"; return 1 }
+
+    for name in ${(f)"$(sed -n "s/^Name = '\(.*\)'$/\1/p" "$tmp")"}; do
+      var="LAZYSQL_PWD_${name//[^A-Za-z0-9]/_}"
+      grep -qF "\${env:$var}" "$tmp" || continue
+      if [[ -z "$master" ]]; then
+        read -rs "master?Mot de passe KeePass ($kdbx) : " && print || return 1
+      fi
+      if secret=$(print -r -- "$master" | keepassxc-cli show -q -a Password "$kdbx" "vault/$name" 2>/dev/null); then
+        envs+=("$var=$secret")
+      else
+        print -u2 "lsql: vault/$name illisible (entrée absente ou mot de passe maître faux)"
+      fi
+    done
+    [[ -n "$master" && ${#envs} -eq 0 ]] && return 1
+
+    # sous-shell : les secrets sont exportés pour lazysql seul, pas pour le shell courant
+    ( for kv in $envs; do export "$kv"; done; command lazysql -config "$tmp" )
+  } always {
+    unset master secret envs
+    rm -f -- "$tmp"
+  }
+}
+# complétion : lsql <Tab> propose les noms de connexion
+_lsql() { compadd -- ${(f)"$(sed -n "s/^Name = '\(.*\)'$/\1/p" ~/.config/lazysql/config.toml)"} }
+(( $+functions[compdef] )) && compdef _lsql lsql

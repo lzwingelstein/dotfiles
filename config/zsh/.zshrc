@@ -131,6 +131,20 @@ alias r="source ${ZDOTDIR}/.zshrc"
 alias z="zed"
 alias t="tmux"
 
+#alias goland="nohup /home/lz581f9l/.local/bin/goland > /dev/null 2>&1 & disown %1"
+
+alias osk_pcy01='openstack --os-cloud=pcy01'
+alias osk_noe01='openstack --os-cloud=noe01'
+# osk <cloud> : sélectionne le cloud de clouds.yaml pour toutes les commandes openstack de la session.
+# osk         : affiche le cloud courant.   unset OS_CLOUD pour revenir en arrière.
+osk() {
+  if [[ -n "$1" ]]; then
+    export OS_CLOUD=$1
+  fi
+  echo "${OS_CLOUD:-aucun cloud sélectionné}"
+}
+alias osk_bvu01='openstack --os-cloud=bvu01'
+
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	command yazi "$@" --cwd-file="$tmp"
@@ -204,6 +218,17 @@ export GITEA_SERVER_URL="git.exaion.in"
 
 eval "$(starship init zsh)"
 
+# jsql : requête SQL DuckDB sur le JSON reçu en entrée, exposé comme la table `t`.
+# usage : openstack image list -f json | jsql "SELECT Name, gio(Size) FROM t"
+jsql() {
+  duckdb -c "CREATE TABLE t AS SELECT * FROM read_json_auto('/dev/stdin'); $1"
+}
+
 # Config spécifique à la machine
 [[ "$(uname -s)" == "Darwin" ]] && [[ -f ${ZDOTDIR}/.zshrc.private ]] && source ${ZDOTDIR}/.zshrc.private
 [[ "$(uname -s)" == "Linux"  ]] && [[ -f ${ZDOTDIR}/.zshrc.work    ]] && source ${ZDOTDIR}/.zshrc.work
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+
+# mise: gestionnaire de versions d'outils (node, go, pnpm…)
+eval "$(mise activate zsh)"

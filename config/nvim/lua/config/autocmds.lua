@@ -15,3 +15,23 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.spell = false
   end,
 })
+
+-- auto-reload files changed on disk (e.g. after a git rebase/checkout)
+-- complements LazyVim's default checktime on FocusGained/TermClose/TermLeave
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI" }, {
+  group = vim.api.nvim_create_augroup("auto_checktime", { clear = true }),
+  callback = function()
+    if vim.o.buftype ~= "nofile" and vim.fn.mode() ~= "c" then
+      vim.cmd("checktime")
+    end
+  end,
+})
+
+-- notify when a buffer is reloaded from disk
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  group = vim.api.nvim_create_augroup("auto_checktime_notify", { clear = true }),
+  callback = function()
+    vim.notify("File reloaded from disk", vim.log.levels.INFO)
+  end,
+})

@@ -5,7 +5,7 @@
             "npm": "@ai-sdk/openai-compatible",
             "name": "Exaion",
             "options": {
-                "baseURL": "https://api.ai.exaion.in/v1",
+                "baseURL": "https://api.ai.exaion.in",
             },
             "models": {
                 "qwen3-6-35b-a3b-coding": {
@@ -15,6 +15,9 @@
                         "output": 64000,
                     },
                 },
+                "GLM-5.3": {
+                    "name": "GLM-5.3"
+                }
             },
         },
     },
